@@ -10,6 +10,8 @@
 		E67C095C25D69AF400A5DDCA /* Article.swift in Sources */ = {isa = PBXBuildFile; fileRef = E67C095B25D69AF400A5DDCA /* Article.swift */; };
 		E67C095F25D69C9300A5DDCA /* ApiRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E67C095E25D69C9300A5DDCA /* ApiRouter.swift */; };
 		E67C096225D69F1800A5DDCA /* NewsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E67C096125D69F1800A5DDCA /* NewsService.swift */; };
+		E67C096925D72DAA00A5DDCA /* UIImageView+Downloaded.swift in Sources */ = {isa = PBXBuildFile; fileRef = E67C096825D72DAA00A5DDCA /* UIImageView+Downloaded.swift */; };
+		E67C096F25D7407600A5DDCA /* UIScrollView+IsNearBottomEdge.swift in Sources */ = {isa = PBXBuildFile; fileRef = E67C096E25D7407600A5DDCA /* UIScrollView+IsNearBottomEdge.swift */; };
 		E6D1DBFC25D5A25200F191EF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6D1DBFB25D5A25200F191EF /* AppDelegate.swift */; };
 		E6D1DC0025D5A25200F191EF /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6D1DBFF25D5A25200F191EF /* MainViewController.swift */; };
 		E6D1DC0325D5A25200F191EF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E6D1DC0125D5A25200F191EF /* Main.storyboard */; };
@@ -24,6 +26,8 @@
 		E67C095B25D69AF400A5DDCA /* Article.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Article.swift; sourceTree = "<group>"; };
 		E67C095E25D69C9300A5DDCA /* ApiRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiRouter.swift; sourceTree = "<group>"; };
 		E67C096125D69F1800A5DDCA /* NewsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsService.swift; sourceTree = "<group>"; };
+		E67C096825D72DAA00A5DDCA /* UIImageView+Downloaded.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+Downloaded.swift"; sourceTree = "<group>"; };
+		E67C096E25D7407600A5DDCA /* UIScrollView+IsNearBottomEdge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIScrollView+IsNearBottomEdge.swift"; sourceTree = "<group>"; };
 		E6D1DBF825D5A25200F191EF /* News List.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "News List.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E6D1DBFB25D5A25200F191EF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E6D1DBFF25D5A25200F191EF /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
@@ -47,6 +51,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		E67C096725D72D8F00A5DDCA /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				E67C096825D72DAA00A5DDCA /* UIImageView+Downloaded.swift */,
+				E67C096E25D7407600A5DDCA /* UIScrollView+IsNearBottomEdge.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
 		E6D1DBEF25D5A25200F191EF = {
 			isa = PBXGroup;
 			children = (
@@ -66,6 +79,7 @@
 		E6D1DBFA25D5A25200F191EF /* News List */ = {
 			isa = PBXGroup;
 			children = (
+				E67C096725D72D8F00A5DDCA /* Extensions */,
 				E6D1DC2425D5B36100F191EF /* Network */,
 				E6D1DC1525D5A6EB00F191EF /* Flow */,
 				E6D1DC1625D5A71F00F191EF /* Supporting Files */,
@@ -202,12 +216,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				E6D1DC0025D5A25200F191EF /* MainViewController.swift in Sources */,
+				E67C096F25D7407600A5DDCA /* UIScrollView+IsNearBottomEdge.swift in Sources */,
 				E67C095F25D69C9300A5DDCA /* ApiRouter.swift in Sources */,
 				E6D1DBFC25D5A25200F191EF /* AppDelegate.swift in Sources */,
 				E67C096225D69F1800A5DDCA /* NewsService.swift in Sources */,
 				E6D1DC2725D5B60300F191EF /* FilterViewController.swift in Sources */,
 				E6D1DC1D25D5A7B100F191EF /* NewsTableViewCell.swift in Sources */,
 				E67C095C25D69AF400A5DDCA /* Article.swift in Sources */,
+				E67C096925D72DAA00A5DDCA /* UIImageView+Downloaded.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
