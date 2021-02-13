@@ -59,14 +59,6 @@ class MainViewController: UIViewController {
         tableView.refreshControl = refreshControl
     }
     
-    private func getImageFromCache(with url: URL?) -> UIImage? {
-        guard let url = url else { return nil }
-        
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        
-        return appDelegate.imageCache.object(forKey: url.absoluteString as NSString)
-    }
-    
     private func getData(for fetchType: NewsService.FetchType) {
         switch fetchType {
         case .firstLoad, .refresh:
@@ -136,7 +128,6 @@ extension MainViewController: UITableViewDataSource {
         }
         
         cell.article = dataSource[indexPath.row]
-        cell.setupImage(with: getImageFromCache(with: cell.article?.urlToImage))
         
         return cell
     }

@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 class NewsTableViewCell: UITableViewCell {
     @IBOutlet private weak var sourceNameLabel: UILabel!
@@ -33,19 +34,6 @@ class NewsTableViewCell: UITableViewCell {
         articleTitleLabel.text = article.title
         articleDescriptionLabel.text = article.description
         publishedOnDateLabel.text = article.getPublishedAtDateFormatted()
-        
-        setupImage()
-    }
-    
-    func setupImage(with image: UIImage? = nil) {
-        if let image = image {
-            articleImageView.image = image
-            
-            return
-        }
-        
-        guard let urlImage = article?.urlToImage else { return }
-        
-        articleImageView.downloaded(from: urlImage)
+        articleImageView.kf.setImage(with: article.urlToImage)
     }
 }
