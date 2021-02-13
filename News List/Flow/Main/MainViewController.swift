@@ -11,21 +11,38 @@ import SafariServices
 class MainViewController: UIViewController {
     @IBOutlet private weak var tableView: UITableView!
     @IBOutlet private weak var searchBar: UISearchBar!
+    @IBOutlet private weak var filterButton: UIButton!
+    
+    private lazy var refreshControl = UIRefreshControl()
+    
+    private var activityIndicator: UIActivityIndicatorView {
+        let activityIndicatorView = UIActivityIndicatorView(style: .whiteLarge)
+        
+        return activityIndicatorView
+    }
     
     private var dataSource: [Article] = []
+    private var searchTask: DispatchWorkItem?
     
-    private(set) var isLoadingData = false
+    private(set) var isLoadingData = false {
+        didSet {
+            handleLoaderState()
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupTableView()
         setupSeachBar()
+        setupRefreshControl()
         
         getData(for: .firstLoad)
     }
     
     private func setupTableView() {
+        tableView.backgroundView = activityIndicator
         tableView.keyboardDismissMode = .onDrag
+        tableView.separatorStyle = .none
         
         let cellNib = UINib(nibName: String(describing: NewsTableViewCell.self), bundle: nil)
         tableView.register(cellNib, forCellReuseIdentifier: String(describing: NewsTableViewCell.self))
@@ -33,6 +50,13 @@ class MainViewController: UIViewController {
     
     private func setupSeachBar() {
         searchBar.backgroundImage = UIImage()
+        searchBar.delegate = self
+    }
+    
+    private func setupRefreshControl() {
+        refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
+        refreshControl.addTarget(self, action: #selector(self.refresh(_:)), for: .valueChanged)
+        tableView.refreshControl = refreshControl
     }
     
     private func getImageFromCache(with url: URL?) -> UIImage? {
@@ -53,14 +77,31 @@ class MainViewController: UIViewController {
         
         isLoadingData = true
         
-        NewsService.shared.fetchDataUsing(fetchType: fetchType) { [weak self] newsResponse in
+        NewsService.shared.fetchData(using: fetchType) { [weak self] newsResponse in
             guard let self = self, let articles = newsResponse.articles else { return }
             
             DispatchQueue.main.async {
                 self.isLoadingData = false
                 self.dataSource.append(contentsOf: articles)
                 self.tableView.reloadData()
+                self.refreshControl.endRefreshing()
             }
+        }
+    }
+    
+    private func handleLoaderState() {
+        if isLoadingData {
+            activityIndicator.startAnimating()
+        } else {
+            activityIndicator.stopAnimating()
+        }
+    }
+    
+    @objc private func refresh(_ sender: AnyObject) {
+        if !isLoadingData {
+            getData(for: .refresh)
+        } else {
+            refreshControl.endRefreshing()
         }
     }
 }
@@ -102,5 +143,48 @@ extension MainViewController: UITableViewDataSource {
 }
 
 extension MainViewController: UISearchBarDelegate {
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        self.searchTask?.cancel()
 
+        let task = DispatchWorkItem {
+            NewsService.shared.fetchData(containing: searchText) { [weak self] newsResponse in
+                guard let self = self, let articleList = newsResponse.articles else { return }
+                
+                self.dataSource = []
+                self.dataSource.append(contentsOf: articleList)
+                Dispatch.DispatchQueue.main.async {
+                    self.tableView.reloadData()
+                }
+            }
+        }
+        
+        searchTask = task
+
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 2, execute: task)
+    }
+    
+    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
+        if searchBar.text == "" && !isLoadingData {
+            getData(for: .firstLoad)
+        }
+    }
+    
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+        searchBar.showsCancelButton = true
+        filterButton.isHidden = true
+    }
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.showsCancelButton = false
+        searchBar.text = nil
+        searchBar.resignFirstResponder()
+        
+        filterButton.isHidden = false
+        
+        searchTask?.cancel()
+        
+        if !isLoadingData {
+            getData(for: .firstLoad)
+        }
+    }
 }

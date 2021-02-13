@@ -46,7 +46,19 @@ class NewsService {
         }.resume()
     }
     
-    func fetchDataUsing(fetchType: FetchType, completion: (@escaping (NewsResponse)->())) {
+    private func fetchNews(completion: (@escaping (NewsResponse)->())) {
+        if let url = apiRouter.getNewsUrl() {
+            fetchData(using: url, completion: completion)
+        }
+    }
+    
+    private func fetchNews(at page: Int, completion: (@escaping (NewsResponse)->())) {
+        if let url = apiRouter.getNewsUrl(on: page) {
+            fetchData(using: url, completion: completion)
+        }
+    }
+    
+    func fetchData(using fetchType: FetchType, completion: (@escaping (NewsResponse)->())) {
         switch fetchType {
         case .firstLoad, .refresh:
             pageNumber = 1
@@ -59,14 +71,8 @@ class NewsService {
         }
     }
     
-    func fetchNews(completion: (@escaping (NewsResponse)->())) {
-        if let url = apiRouter.getNewsUrl() {
-            fetchData(using: url, completion: completion)
-        }
-    }
-    
-    func fetchNews(at page: Int, completion: (@escaping (NewsResponse)->())) {
-        if let url = apiRouter.getNewUrl(on: page) {
+    func fetchData(containing text: String, completion: (@escaping (NewsResponse)->())) {
+        if let url = apiRouter.getNewsUrl(containing: text) {
             fetchData(using: url, completion: completion)
         }
     }

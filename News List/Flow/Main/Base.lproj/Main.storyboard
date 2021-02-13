@@ -23,7 +23,7 @@
                                     <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="i7l-py-42T">
                                         <rect key="frame" x="5" y="20" width="418" height="56"/>
                                         <subviews>
-                                            <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="RfQ-rS-tBm">
+                                            <searchBar contentMode="redraw" placeholder="Search ..." translatesAutoresizingMaskIntoConstraints="NO" id="RfQ-rS-tBm">
                                                 <rect key="frame" x="0.0" y="0.0" width="370" height="56"/>
                                                 <textInputTraits key="textInputTraits"/>
                                             </searchBar>
@@ -69,6 +69,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="filterButton" destination="Q6z-Ms-PTG" id="ea6-Ph-nOH"/>
                         <outlet property="searchBar" destination="RfQ-rS-tBm" id="E8w-eM-TeG"/>
                         <outlet property="tableView" destination="fJk-PX-Nx3" id="ycZ-mM-xyG"/>
                     </connections>

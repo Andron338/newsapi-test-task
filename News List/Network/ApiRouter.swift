@@ -27,14 +27,24 @@ class ApiRouter {
         }
     }
     
+    enum SortBy: String {
+        case publishedAt = "publishedAt"
+        case popularity = "popularity"
+        case revelancy = "revelancy"
+    }
+    
     private let apiKey = "74e6f8f8bbd64dae83fca3d42902429d"
     private let pageSize = 20
     
     func getNewsUrl() -> URL? {
-        return URL(string: "\(Endpoints.topHeadlines.path)?country=us&pageSize=\(pageSize)&apiKey=\(apiKey)")
+        return URL(string: "\(Endpoints.topHeadlines.path)?sortBy=\(SortBy.publishedAt)&country=us&pageSize=\(pageSize)&apiKey=\(apiKey)")
     }
     
-    func getNewUrl(on page: Int) -> URL? {
-        return URL(string: "\(Endpoints.topHeadlines.path)?country=us&pageSize=\(pageSize)&page=\(page)&apiKey=\(apiKey)")
+    func getNewsUrl(on page: Int) -> URL? {
+        return URL(string: "\(Endpoints.topHeadlines.path)?sortBy=\(SortBy.publishedAt)&country=us&pageSize=\(pageSize)&page=\(page)&apiKey=\(apiKey)")
+    }
+    
+    func getNewsUrl(containing text: String) -> URL? {
+        return URL(string: "\(Endpoints.topHeadlines.path)?sortBy=\(SortBy.revelancy)&country=us&q=\(text)&apiKey=\(apiKey)")
     }
 }
